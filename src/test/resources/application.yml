@@ -12,3 +12,18 @@ spring:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+logging:
+  level:
+    root: info
+    playground:
+      cheeseblossom:
+        jpa: debug
+    org:
+      springframework:
+        jdbc: trace
+      hibernate:
+        SQL: debug
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace

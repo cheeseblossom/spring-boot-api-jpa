@@ -14,7 +14,7 @@ import playground.cheeseblossom.api.config.TestConfig;
 import playground.cheeseblossom.api.domain.Sample;
 import playground.cheeseblossom.api.domain.SampleRepository;
 
-import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -58,9 +58,9 @@ public class JpaTest {
     sampleRepository.save(s);
 
     // when
-    List<String> result = sampleRepository.findText();
+    Optional<Sample> result = sampleRepository.findById(1L);
 
     // then
-    then(result.get(0)).isEqualTo(text);
+    then(result.get().getText()).isEqualTo(text);
   }
 }
