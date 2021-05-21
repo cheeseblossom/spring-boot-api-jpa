@@ -5,9 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import playground.cheeseblossom.api.domain.Sample;
 import playground.cheeseblossom.api.domain.SampleRepository;
 import playground.cheeseblossom.api.http.BasicResponse;
 import playground.cheeseblossom.api.http.CommonResponse;
+import playground.cheeseblossom.api.http.request.sample.SampleRequestDto;
 import playground.cheeseblossom.api.http.response.sample.SampleResponseDto;
 
 import java.util.List;
@@ -32,5 +34,14 @@ public class SampleService {
             .collect(Collectors.toList());
     return ResponseEntity.status(HttpStatus.OK)
             .body(new CommonResponse<>(result));
+  }
+
+  @Transactional(rollbackFor = Exception.class)
+  public ResponseEntity<BasicResponse> save(SampleRequestDto requestDto) {
+    sampleRepository.save(Sample.builder()
+            .text(requestDto.getText())
+            .build());
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(new CommonResponse<>("OK"));
   }
 }

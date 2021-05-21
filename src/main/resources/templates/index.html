@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Test Page</title>
+  <script defer th:src="@{/js/api.js}"></script>
 </head>
 <body>
+<form th:action="@{/api/save}" th:method="post" th:object="${sample}">
+  <input id="text" name="text" type="text" placeholder="text.." />
+  <button id="doPost" type="button">submit</button>
+  <div>
+    <!-- 아래 작성된 div로 에러 메시지를 컨트롤 하기 위해서는 Post Controller의 리턴 타입을
+    ModelAndView나 String으로 하며, 값은 현재 페이지를 써야한다. -->
+    <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></div>
+  </div>
+</form>
 </body>
 </html>
