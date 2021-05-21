@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Page</title>
+  <script defer th:src="@{/js/api.js}"></script>
+</head>
+<body>
+<form th:action="@{/api/change}" th:method="put">
+  <input id="idx" name="idx" type="number">
+  <input id="text" name="text" type="text" placeholder="text.." />
+  <button id="doPut" type="button">submit</button>
+</form>
+</body>
+</html>

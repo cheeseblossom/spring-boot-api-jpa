@@ -35,4 +35,13 @@ public class SampleApiController {
     }
     return sampleService.save(requestDto);
   }
+
+  @PutMapping("/change")
+  public ResponseEntity<BasicResponse> modify(@Valid @RequestBody SampleRequestDto requestDto, BindingResult br) {
+    if (br.hasErrors()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(new CommonResponse<>(br.getAllErrors()));
+    }
+    return sampleService.modify(requestDto);
+  }
 }

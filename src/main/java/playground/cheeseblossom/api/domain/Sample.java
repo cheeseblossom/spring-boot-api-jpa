@@ -23,7 +23,9 @@ public class Sample extends BaseEntity {
   private String text;
 
   @Builder
-  public Sample(String text) {
+  public Sample(long idx, String text) {
+    super.idx = idx;
     this.text = text;
+    super.maintainData();
   }
 }

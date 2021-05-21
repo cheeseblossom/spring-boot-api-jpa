@@ -13,6 +13,7 @@ import playground.cheeseblossom.api.http.request.sample.SampleRequestDto;
 import playground.cheeseblossom.api.http.response.sample.SampleResponseDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +40,21 @@ public class SampleService {
   @Transactional(rollbackFor = Exception.class)
   public ResponseEntity<BasicResponse> save(SampleRequestDto requestDto) {
     sampleRepository.save(Sample.builder()
+            .text(requestDto.getText())
+            .build());
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(new CommonResponse<>("OK"));
+  }
+
+  @Transactional(rollbackFor = Exception.class)
+  public ResponseEntity<BasicResponse> modify(SampleRequestDto requestDto) {
+    Optional<Sample> sample = sampleRepository.findById(requestDto.getIdx());
+    if (sample.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(new CommonResponse<>("No Data"));
+    }
+    sampleRepository.save(Sample.builder()
+            .idx(sample.get().getIdx())
             .text(requestDto.getText())
             .build());
     return ResponseEntity.status(HttpStatus.OK)

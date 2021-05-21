@@ -47,4 +47,8 @@ public abstract class BaseEntity {
   public void deleteData() {
     this.delYn = "Y";
   }
+
+  public void maintainData() {
+    this.delYn = "N";
+  }
 }

@@ -19,4 +19,9 @@ public class SampleController {
     ModelAndView mv = new ModelAndView("index");
     return mv;
   }
+
+  @GetMapping("/change")
+  public String change() {
+    return "change";
+  }
 }
