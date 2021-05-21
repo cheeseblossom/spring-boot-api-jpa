@@ -23,9 +23,13 @@ public class Sample extends BaseEntity {
   private String text;
 
   @Builder
-  public Sample(long idx, String text) {
+  public Sample(long idx, String text, String del) {
     super.idx = idx;
     this.text = text;
-    super.maintainData();
+    if (del.equals("del")) {
+      super.deleteData();
+    } else {
+      super.maintainData();
+    }
   }
 }

@@ -8,6 +8,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import playground.cheeseblossom.api.http.BasicResponse;
 import playground.cheeseblossom.api.http.CommonResponse;
+import playground.cheeseblossom.api.http.request.sample.RemovedSampleRequestDto;
 import playground.cheeseblossom.api.http.request.sample.SampleRequestDto;
 import playground.cheeseblossom.api.service.SampleService;
 
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api")
+@RequestMapping("/api")
 public class SampleApiController {
 
   private final SampleService sampleService;
@@ -43,5 +44,23 @@ public class SampleApiController {
               .body(new CommonResponse<>(br.getAllErrors()));
     }
     return sampleService.modify(requestDto);
+  }
+
+  @DeleteMapping("/remove")
+  public ResponseEntity<BasicResponse> delete(@Valid @RequestBody RemovedSampleRequestDto requestDto, BindingResult br) {
+    if (br.hasErrors()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(new CommonResponse<>(br.getAllErrors()));
+    }
+    return sampleService.delete(Long.parseLong(requestDto.getIdx()));
+  }
+
+  @DeleteMapping("/rremove")
+  public ResponseEntity<BasicResponse> realDelete(@Valid @RequestBody RemovedSampleRequestDto requestDto, BindingResult br) {
+    if (br.hasErrors()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(new CommonResponse<>(br.getAllErrors()));
+    }
+    return sampleService.realDelete(Long.parseLong(requestDto.getIdx()));
   }
 }

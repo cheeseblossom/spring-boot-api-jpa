@@ -24,4 +24,14 @@ public class SampleController {
   public String change() {
     return "change";
   }
+
+  @GetMapping("/remove")
+  public String remove() {
+    return "remove";
+  }
+
+  @GetMapping("/rremove")
+  public String realRemove() {
+    return "rremove";
+  }
 }

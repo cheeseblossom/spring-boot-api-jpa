@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Page</title>
+  <script defer th:src="@{/js/api.js}"></script>
+</head>
+<body>
+<form th:action="@{/api/remove}" th:method="delete">
+  <input id="idx" name="idx" type="number">
+  <button id="doDelete" type="button">submit</button>
+</form>
+</body>
+</html>

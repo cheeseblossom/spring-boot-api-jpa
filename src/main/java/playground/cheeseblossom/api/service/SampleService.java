@@ -24,7 +24,7 @@ public class SampleService {
 
   @Transactional(readOnly = true)
   public ResponseEntity<BasicResponse> getList() {
-    List<SampleResponseDto> result = sampleRepository.findAll()
+    List<SampleResponseDto> result = sampleRepository.findAllByDelYn("N")
             .stream()
             .map(sample -> SampleResponseDto.builder()
                     .idx(sample.getIdx())
@@ -57,6 +57,34 @@ public class SampleService {
             .idx(sample.get().getIdx())
             .text(requestDto.getText())
             .build());
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(new CommonResponse<>("OK"));
+  }
+
+  @Transactional(rollbackFor = Exception.class)
+  public ResponseEntity<BasicResponse> delete(long idx) {
+    Optional<Sample> sample = sampleRepository.findById(idx);
+    if (sample.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(new CommonResponse<>("No Data"));
+    }
+    sampleRepository.save(Sample.builder()
+            .idx(idx)
+            .text(sample.get().getText())
+            .del("del")
+            .build());
+    return ResponseEntity.status(HttpStatus.OK)
+            .body(new CommonResponse<>("OK"));
+  }
+
+  @Transactional(rollbackFor = Exception.class)
+  public ResponseEntity<BasicResponse> realDelete(long idx) {
+    Optional<Sample> sample = sampleRepository.findById(idx);
+    if (sample.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(new CommonResponse<>("No Data"));
+    }
+    sampleRepository.delete(sample.get());
     return ResponseEntity.status(HttpStatus.OK)
             .body(new CommonResponse<>("OK"));
   }
